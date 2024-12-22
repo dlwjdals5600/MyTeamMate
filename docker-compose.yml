@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./apps/backend
+    ports:
+      - "3000:3000" # Node.js API 서버
+    volumes:
+      - ./apps/backend:/app # 로컬 파일과 컨테이너 내부 파일 연결
+      - /app/node_modules # node_modules는 로컬과 분리
+    environment:
+      - NODE_ENV=development
+    command: "npm run dev" # nodemon 실행
+
+  frontend:
+    build:
+      context: ./apps/frontend/myTeamMate
+    ports:
+      - "8080:8080" # Vite 개발 서버
+    volumes:
+      - ./apps/frontend/myTeamMate:/app # 로컬 파일과 컨테이너 내부 파일 연결
+      - /app/node_modules # node_modules는 로컬과 분리
+    environment:
+      - NODE_ENV=development
+    command: "pnpm run dev" # Vite 개발 서버 실행
